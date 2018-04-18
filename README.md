@@ -68,10 +68,10 @@ the object should be like this:
           return ...
         },
         _renderFetching:function(){ //optional
-          return ...
+          return ...ß
         }
       }      
 
 then in html it should be like This
 
-<h3>选择交易</h3>: <ContractData contract="ContractName" method="methodName" methodArgs={[...methodArgs...]} render={..._render}/>
+     <ContractData contract="ContractName" method="methodName" methodArgs={[...methodArgs...]} render={..._render}/>
