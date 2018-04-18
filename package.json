@@ -1,8 +1,8 @@
 {
   "name": "qz-drizzle-components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Put some Drizzle on your React components.",
-  "main": "dist/drizzle-react-components.js",
+  "main": "dist/qz-drizzle-components.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "publish": "webpack --config webpack.prod.js"
