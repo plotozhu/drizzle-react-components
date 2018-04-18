@@ -1,5 +1,6 @@
 # drizzle-react-components
-A set of useful components for common UI elements.
+forked from truffle: A set of useful components for common UI elements.
+Add customable render .
 
 ## Components
 
