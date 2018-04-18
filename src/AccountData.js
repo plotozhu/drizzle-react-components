@@ -11,6 +11,21 @@ class AccountData extends Component {
     super(props);
 
     this.precisionRound = this.precisionRound.bind(this);
+    this._render = {
+      _renderNotInited:function(){
+        return (
+          <span>Initializing...</span>
+        )
+      },
+      _doRender:function(address,balance,units){
+        return(
+          <div>
+            <h4>{address}</h4>
+            <p>{balance} {units}</p>
+          </div>
+        )
+      }
+    }
   }
 
   precisionRound(number, precision) {
@@ -21,9 +36,7 @@ class AccountData extends Component {
   render() {
     // No accounts found.
     if(Object.keys(this.props.accounts).length === 0) {
-      return (
-        <span>Initializing...</span>
-      )
+      return (this.props.render && this.props.render._renderNotInited)?this.props.render._renderNotInited():this._render._renderNotInited();
     }
 
     // Get account address and balance.
@@ -41,12 +54,10 @@ class AccountData extends Component {
       balance = this.precisionRound(balance, this.props.precision)
     }
 
-    return(
-      <div>
-        <h4>{address}</h4>
-        <p>{balance} {units}</p>
-      </div>
-    )
+
+    return  (this.props.render && this.props.render._doRender)?this.props.render._doRender(address,balance,units):this._render._doRender(address,balance,units);
+
+
   }
 }
 
@@ -61,7 +72,7 @@ AccountData.contextTypes = {
 const mapStateToProps = state => {
   return {
     accounts: state.accounts,
-    accountBalances: state.accountBalances    
+    accountBalances: state.accountBalances
   }
 }
 

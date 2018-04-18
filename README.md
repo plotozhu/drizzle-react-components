@@ -11,7 +11,7 @@ This components wraps your entire app (but within the DrizzleProvider) and will 
 
 `errorComp` (component) The component displayed if Drizzle initialization fails.
 
-### ContractData
+### ContractBaseDisp
 
 `contract` (string, required) Name of the contract to call.
 
@@ -25,10 +25,52 @@ This components wraps your entire app (but within the DrizzleProvider) and will 
 
 `toAscii` (boolean) Converts the return value to an Ascii string before display.
 
-### ContractForm
+### ContractBaseForm
 
 `contract` (string, required) Name of the contract whose method will be the basis the form.
 
 `method` (string, required) Method whose inputs will be used to create corresponding form fields.
 
 `labels` (array) Custom labels; will follow ABI input ordering. Useful for friendlier names. For example "_to" becoming "Recipient Address".
+
+
+###  extend with your own style
+the original is simple display,
+
+create a class with any of this three function
+
+  `_doRender(data)`  return a jsx format to render your data ex:
+
+          return(
+            <span>{displayData}{pendingSpinner}</span>
+          )
+
+  `_renderNotInited()`  return a jsx format to render when it is not initialized, default:
+
+        return (
+          <span>Initializing...</span>
+        )
+
+  `_renderNotInited()`  return a jsx format to render when it is not initialized, default:
+
+      return (
+        <span>Fetching...</span>
+      )
+
+the object should be like this:
+
+      let _render = {
+        _doRender: function (data){
+          return ...
+        },
+        _renderNotInited:function(){ //optional
+          return ...
+        },
+        _renderFetching:function(){ //optional
+          return ...
+        }
+      }      
+
+then in html it should be like This
+
+<h3>选择交易</h3>: <ContractData contract="ContractName" method="methodName" methodArgs={[...methodArgs...]} render={..._render}/>
