@@ -28,16 +28,24 @@ class ContractData extends Component {
       }
     }
 
+    let that = this;
     this._render = {
       _doRender:function (displayData){
+        // Show a loading spinner for future updates.
+        var pendingSpinner = that.props.contracts[that.props.contract].synced ? '' : ' 🔄'
+
+        // Optionally hide loading spinner (EX: ERC20 token symbol).
+        if (that.props.hideIndicator) {
+          pendingSpinner = ''
+        }
         // Optionally convert to UTF8
-        if (this.props.toUtf8) {
-          displayData = this.context.drizzle.web3.utils.hexToUtf8(displayData)
+        if (that.props.toUtf8) {
+          displayData = that.context.drizzle.web3.utils.hexToUtf8(displayData)
         }
 
         // Optionally convert to Ascii
-        if (this.props.toAscii) {
-          displayData = this.context.drizzle.web3.utils.hexToAscii(displayData)
+        if (that.props.toAscii) {
+          displayData = that.context.drizzle.web3.utils.hexToAscii(displayData)
         }
 
         // If return value is an array
@@ -104,16 +112,10 @@ class ContractData extends Component {
       return (this.props.render && this.props.render._renderFetching)?this.props.render._renderFetching():this._render._renderFetching();
     }
 
-    // Show a loading spinner for future updates.
-    var pendingSpinner = this.props.contracts[this.props.contract].synced ? '' : ' 🔄'
 
-    // Optionally hide loading spinner (EX: ERC20 token symbol).
-    if (this.props.hideIndicator) {
-      pendingSpinner = ''
-    }
 
     var displayData = this.props.contracts[this.props.contract][this.props.method][this.dataKey].value
-    return  (this.props.render && this.props.render._doRender)?this.props.render._doRender():this._render._doRender();
+    return  (this.props.render && this.props.render._doRender)?this.props.render._doRender(displayData):this._render._doRender(display);
 
 
   }
