@@ -115,7 +115,7 @@ class ContractData extends Component {
 
 
     var displayData = this.props.contracts[this.props.contract][this.props.method][this.dataKey].value
-    return  (this.props.render && this.props.render._doRender)?this.props.render._doRender(displayData):this._render._doRender(display);
+    return  (this.props.render && this.props.render._doRender)?this.props.render._doRender(displayData):this._render._doRender(displayData);
 
 
   }
