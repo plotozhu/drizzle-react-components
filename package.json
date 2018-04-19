@@ -1,6 +1,6 @@
 {
   "name": "qz-drizzle-components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Put some Drizzle on your React components.",
   "main": "dist/qz-drizzle-components.js",
   "scripts": {
@@ -25,7 +25,8 @@
     "babel-preset-react": "^6.24.1",
     "react-redux": "^5.0.6",
     "uglifyjs-webpack-plugin": "^1.2.4",
-    "webpack": "^3.5.3"
+    "webpack": "^3.5.3",
+    "webpack-cli": "^2.0.14"
   },
   "repository": {
     "type": "git",
