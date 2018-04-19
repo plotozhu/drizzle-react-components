@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
  * Create component.
  */
 
-class ContractBaseDisp extends Component {
+class ContractData extends Component {
   constructor(props, context) {
     super(props)
 
@@ -27,62 +27,57 @@ class ContractBaseDisp extends Component {
           break
       }
     }
-    this.render = {
 
-    }
     this._render = {
       _doRender:function (displayData){
+        // Optionally convert to UTF8
+        if (this.props.toUtf8) {
+          displayData = this.context.drizzle.web3.utils.hexToUtf8(displayData)
+        }
 
-            // Optionally convert to UTF8
-            if (this.props.toUtf8) {
-              displayData = this.context.drizzle.web3.utils.hexToUtf8(displayData)
-            }
+        // Optionally convert to Ascii
+        if (this.props.toAscii) {
+          displayData = this.context.drizzle.web3.utils.hexToAscii(displayData)
+        }
 
-            // Optionally convert to Ascii
-            if (this.props.toAscii) {
-              displayData = this.context.drizzle.web3.utils.hexToAscii(displayData)
-            }
-
-            // If return value is an array
-            if (typeof displayData === 'array') {
-              const displayListItems = displayData.map((datum, index) => {
-                <li key={index}>{datum}{pendingSpinner}</li>
-              })
-
-              return(
-                <ul>
-                  {displayListItems}
-                </ul>
-              )
-            }
-
-          // If retun value is an object
-          if (typeof displayData === 'object') {
-            var i = 0
-            const displayObjectProps = []
-
-            Object.keys(displayData).forEach((key) => {
-              if (i != key) {
-                displayObjectProps.push(<li key={i}>
-                  <strong>{key}</strong>{pendingSpinner}<br/>
-                  {displayData[key]}
-                </li>)
-              }
-
-              i++
-            })
-
-            return(
-              <ul>
-                {displayObjectProps}
-              </ul>
-            )
-          }
+        // If return value is an array
+        if (typeof displayData === 'array') {
+          const displayListItems = displayData.map((datum, index) => {
+            <li key={index}>{datum}{pendingSpinner}</li>
+          })
 
           return(
-            <span>{displayData}{pendingSpinner}</span>
+            <ul>
+              {displayListItems}
+            </ul>
           )
-    },
+        }
+
+      // If retun value is an object
+      if (typeof displayData === 'object') {
+        var i = 0
+        const displayObjectProps = []
+
+        Object.keys(displayData).forEach((key) => {
+          if (i != key) {
+            displayObjectProps.push(<li key={i}>
+              <strong>{key}</strong>{pendingSpinner}<br/>
+              {displayData[key]}
+            </li>)
+          }
+
+          i++
+        })
+
+        return(
+          <ul>
+            {displayObjectProps}
+          </ul>
+        )
+      }
+
+      return(<span>{displayData}{pendingSpinner}</span>);
+      },
       _renderNotInited:function(){
         return (
           <span>Initializing...</span>
@@ -138,4 +133,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default drizzleConnect(ContractBaseDisp, mapStateToProps)
+export default drizzleConnect(ContractData, mapStateToProps)
