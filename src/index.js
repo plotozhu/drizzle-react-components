@@ -1,6 +1,6 @@
 import AccountData from './AccountData.js'
-import ContractData from './ContractBaseDisp.js'
-import ContractForm from './ContractBaseForm.js'
+import ContractData from './ContractData.js'
+import ContractForm from './ContractForm.js'
 import LoadingContainer from './LoadingContainer.js'
 
 export {
