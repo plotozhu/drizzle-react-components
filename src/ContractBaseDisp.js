@@ -82,12 +82,12 @@ class ContractBaseDisp extends Component {
           return(
             <span>{displayData}{pendingSpinner}</span>
           )
-    }
+    },
       _renderNotInited:function(){
         return (
           <span>Initializing...</span>
         )
-      }
+      },
       _renderFetching:function(){
         return (
           <span>Fetching...</span>
