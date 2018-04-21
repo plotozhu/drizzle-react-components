@@ -36,6 +36,7 @@ This components wraps your entire app (but within the DrizzleProvider) and will 
 
 
 ###  extend with your own style
+### ContractData
 the original is simple display,
 
 create a class with any of this three function
@@ -75,3 +76,83 @@ the object should be like this:
 then in html it should be like This
 
      <ContractData contract="ContractName" method="methodName" methodArgs={[...methodArgs...]} render={..._render}/>
+
+###ContractForm
+we can customize the form appearence by three props:
+
+#### formRender ####
+ use this function to render total form, the default is
+
+    formRender(){
+      return(  (<form className="pure-form pure-form-stacked">
+
+          {this.props.inputsRender?this.props.inputsRender():this.inputsRender()}
+          {this.props.optionsRender?this.props.optionsRender():this.optionsRender()}
+
+          <button key="submit" className="pure-button" type="button" onClick={this.handleSubmit}>Submit</button>
+        </form>));
+
+    }
+
+this render can rarely be customized, or only class is to be modified;
+
+ this.handleSubmit should be called when you want to send transaction.
+
+#### inputsRender####
+ use this to customize inputs,
+there are three properties would be used:
+
+1.*inputs*: inputs infomation of the function
+
+2.*label*: labels properties of inputs
+
+3.*state*: state of this function(inputs value stored)
+
+the default is:
+
+        inputsRender (){
+          let inputs = this.inputs;
+          let labels = this.props.labels || [];
+          let state = this.state;
+          ......
+          return inputs.map((input, index) => {
+            ...... onChange={this.handleInputChange} />)
+          });
+        }
+
+custom render should rend data from this.inputs, and   this.handleInputChange should be called when you need to changed the stored input value
+
+
+#### optionsRender ####
+ this part is used to render the extra options(gasLimit,gasPrice,from,to,value,payable)
+there is one property would be used:
+
+
+*sendOptions*: the sendOptions of this function
+
+
+
+
+        optionsRender(){
+          let sendOptions = this.state.sendOptions;
+          let state = this.state;
+          return (Object.keys(sendOptions).map( (prop,index) => {
+            if(prop === 'payable'){
+              // check if input type is struct and if so loop out struct fields as well
+                return (<div key={prop}> <input key={prop} type="checkbox" name={prop} checked={sendOptions['payable']} placeholder={`${prop}:${sendOptions[prop]}`} onClick={this.handleOptionChange.bind(this)} /><label htmlFor={prop} >{prop}</label></div>)
+
+            }else{
+              // check if input type is struct and if so loop out struct fields as well
+              return (<div key={prop}> <input key={prop} type="text" name={prop} value={sendOptions[prop]} placeholder={`${prop}:${sendOptions[prop]}`} onChange={this.handleOptionChange.bind(this)} /><label htmlFor={prop} >{prop}</label></div>)
+
+            }
+          }));
+        }
+custom render should rend data from sendOptions, and   this.handleOptionChanged should be called when you need to changed the stored sendOptions value
+
+      <ContractForm contract="SimpleStorage" method="set" optionsRender={myOpRender.bind(this)}
+      inputsRender={myInputRender.bind(this)}
+      formRender={myFormRender.bind(this)} labels={['x']} />
+
+
+!!! Enjoy it, Enjoy ethereum, Long live ethereum !!!
